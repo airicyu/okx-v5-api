@@ -1,10 +1,10 @@
-# okx-v5-js
+# okx-v5-api
 
 This is a non-official [OKX V5 API](https://www.okx.com/docs-v5/) SDK for javascript.
 
 ## install
 
-npm install okx-v5-js
+npm install okx-v5-api
 
 ------------
 

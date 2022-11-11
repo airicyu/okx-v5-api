@@ -1,5 +1,5 @@
 {
-  "name": "okx-v5",
+  "name": "okx-v5-api",
   "version": "1.0.0",
   "description": "",
   "main": "dist/main.js",
@@ -17,8 +17,14 @@
     "format": "prettier --write ./src/**.ts ./test/**.ts",
     "lint": "eslint ./src --ext .ts"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "okx", "okx v5", "okx v5 api"
+  ],
+  "author": "airic yu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/airicyu/okx-v5-api"
+  },
   "license": "MIT",
   "devDependencies": {
     "@tsconfig/node18": "^1.0.1",
