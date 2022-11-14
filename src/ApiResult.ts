@@ -3,16 +3,16 @@ import { ApiError } from './ApiError'
 
 export class ApiResult {
     code: string
-    message: string
+    msg: string
     data: any = undefined
     error: ApiError | null = null
 
-    constructor(code: string, message: string, data: any) {
+    constructor(code: string, msg: string, data: any) {
         this.code = code
-        this.message = message
+        this.msg = msg
         this.data = data
         if (this.code !== '0') {
-            this.error = new ApiError(code, message)
+            this.error = new ApiError(code, msg)
         }
     }
 

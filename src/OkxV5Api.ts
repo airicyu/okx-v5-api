@@ -37,7 +37,7 @@ class OkxV5Api {
     /**
      * Generic REST API call with handle of signature
      */
-    async restApi({
+    async call({
         path,
         method,
         params,

@@ -5,7 +5,7 @@ const run = async () => {
         apiBaseUrl: 'https://www.okx.com',
     })
 
-    const apiResult = await okxV5Api.restApi({
+    const apiResult = await okxV5Api.call({
         method: 'GET',
         path: '/api/v5/market/exchange-rate',
     })

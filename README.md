@@ -25,7 +25,7 @@ const run = async () => {
         }, */
     })
 
-    const apiResult = await okxV5Api.restApi({
+    const apiResult = await okxV5Api.call({
         method: 'GET',
         path: '/api/v5/market/exchange-rate',
     })
@@ -40,7 +40,7 @@ output
 ```
 ApiResult {
   code: '0',
-  message: '',
+  msg: '',
   data: [ { usdCny: '7.244' } ],
   error: null
 }
@@ -59,7 +59,7 @@ By default we return an `ApiResult` object to represent the raw response body.
 #### Demo success case
 ```javascript
 const apiResult = (
-    await okxV5Api.restApi({
+    await okxV5Api.call({
         method: 'GET',
         path: '/api/v5/market/exchange-rate',
     })
@@ -76,7 +76,7 @@ output
 #### Demo error case
 ```javascript
 const apiResult = (
-    await okxV5Api.restApi({
+    await okxV5Api.call({
         method: 'POST',
         path: '/api/v5/account/set-position-mode',
         data: {
@@ -94,7 +94,7 @@ output
 
 ApiError: 50114: Invalid Authority
     at new ApiResult (.....)
-    at OkxV5Api.restApi (.....)
+    at OkxV5Api.call (.....)
     at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
     at async run (.....\main.js:19:25) {
   code: '50114',
@@ -123,20 +123,20 @@ const okxV5Api = new OkxV5Api({
 
 ## API
 
-### class OkxV5Api
+### class OkxV5Api (main class)
 
-Basically you only need to create an instance of `OkxV5Api` once, and reuse it to call different APIs by the `restApi` methods.
+Basically you only need to create an instance of `OkxV5Api` once, and reuse it to call different APIs by the `call` methods.
 
-The `restApi` methods return a `ApiResult` object
+The `call` methods return a `ApiResult` object
 
 -----
 
-### class ApiResult
+### class ApiResult (Thin wrapper to result)
 
 It is thin wrapper of the V5 API's raw response result. It has the following attributes:
 
 - code (string)
-- message (string) (The same as V5-API's "msg" attribute value)
+- msg (string)
 - data (any)
 
 In addition:
@@ -147,7 +147,7 @@ It also has a method of `getOrThrow`, which return the `data` if success, or thr
 
 -----
 
-### class ApiError
+### class ApiError (Error wrapper)
 
 just an Error wrapping V5-API's code and message.
 
@@ -156,10 +156,10 @@ export class ApiError extends Error {
     code: string
     msg: string
 
-    constructor(code: string, message: string) {
-        super(`${code}: ${message}`)
+    constructor(code: string, msg: string) {
+        super(`${code}: ${msg}`)
         this.code = code
-        this.msg = message
+        this.msg = msg
         this.name = 'ApiError'
     }
 }
