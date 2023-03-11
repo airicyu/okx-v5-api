@@ -121,6 +121,25 @@ const okxV5Api = new OkxV5Api({
 
 ------------
 
+## Demo-trading mode
+
+If you need to call private APIs, you need authentication by passing the `profileConfig` property when you create new `OkxV5Api` instance.
+
+```javascript
+const okxV5Api = new OkxV5Api({
+    apiBaseUrl: 'https://www.okx.com',
+    profileConfig: {
+        apiKey: 'XXX',
+        secretKey: 'YYY',
+        passPhrase: 'ZZZ',
+        simulated: true // <--- pass this param
+    },
+})
+```
+
+
+------------
+
 ## API
 
 ### class OkxV5Api (main class)

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ApiError } from './ApiError'
+import { ApiError } from './ApiError.js'
 
 export class ApiResult {
     code: string

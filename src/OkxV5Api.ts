@@ -1,7 +1,7 @@
 import CryptoJS from 'crypto-js'
 import url from 'url'
-import { httpClient as defaultHttpClient } from './defaultHttpClient'
-import { ApiResult } from './ApiResult'
+import { httpClient as defaultHttpClient } from './defaultHttpClient.js'
+import { ApiResult } from './ApiResult.js'
 
 const DEFAULT_HEADERS = {
     'Content-Type': 'application/json',
@@ -15,6 +15,7 @@ class OkxV5Api {
         passPhrase: string
     }
     #httpClient: HttpClient
+    #simulated = false
 
     constructor({
         apiBaseUrl,
@@ -26,12 +27,16 @@ class OkxV5Api {
             apiKey: string
             secretKey: string
             passPhrase: string
+            simulated?: boolean
         }
         httpClient?: HttpClient
     }) {
         this.#apiBaseUrl = apiBaseUrl
         this.#profileConfig = profileConfig
         this.#httpClient = httpClient ?? defaultHttpClient
+        if (typeof profileConfig?.simulated === 'boolean') {
+            this.#simulated = profileConfig.simulated
+        }
     }
 
     /**
@@ -74,7 +79,7 @@ class OkxV5Api {
                 url: requestUrl,
                 method,
                 timeout,
-                headers: { ...DEFAULT_HEADERS, ...signHeaders },
+                headers: { ...DEFAULT_HEADERS, ...(this.#simulated ? { '`x-simulated-trading': '1' } : {}), ...signHeaders },
                 params,
                 data,
             })

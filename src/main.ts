@@ -1,3 +1,3 @@
-export { OkxV5Api } from './OkxV5Api'
-export { ApiError } from './ApiError'
-export { ApiResult } from './ApiResult'
+export { OkxV5Api } from './OkxV5Api.js'
+export { ApiError } from './ApiError.js'
+export { ApiResult } from './ApiResult.js'
