@@ -79,7 +79,7 @@ class OkxV5Api {
                 url: requestUrl,
                 method,
                 timeout,
-                headers: { ...DEFAULT_HEADERS, ...(this.#simulated ? { '`x-simulated-trading': '1' } : {}), ...signHeaders },
+                headers: { ...DEFAULT_HEADERS, ...(this.#simulated ? { 'x-simulated-trading': '1' } : {}), ...signHeaders },
                 params,
                 data,
             })

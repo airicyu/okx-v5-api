@@ -1,6 +1,6 @@
 {
   "name": "okx-v5-api",
-  "version": "2.2.0",
+  "version": "2.3.0",
   "description": "",
   "type": "module",
   "main": "dist/main.js",
