@@ -13,7 +13,7 @@ npm install okx-v5-api
 main.js
 
 ```javascript
-import { OkxV5Api } from 'okx-v5-js'
+import { OkxV5Api } from 'okx-v5-api'
 
 const run = async () => {
     const okxV5Api = new OkxV5Api({
@@ -31,6 +31,13 @@ const run = async () => {
     })
 
     console.log(apiResult)
+    
+    const apiResult2 = await okxV5Api.call({
+        method: 'GET',
+        path: '/api/v5/asset/currencies?ccy=BTC,ETH,USDT,USDC',
+    })
+    
+    console.log(apiResult2)
 }
 
 run()
@@ -44,11 +51,36 @@ ApiResult {
   data: [ { usdCny: '7.244' } ],
   error: null
 }
+
+...
+```
+
+GET method API sample
+
+```javascript
+const apiResult = (
+    await okxV5Api.call({
+        method: 'GET',
+        path: '/api/v5/xxx/yyy?ccy=BTC'
+    })
+).getOrThrow()
+```
+
+POST method API sample
+
+```javascript
+const apiResult = (
+    await okxV5Api.call({
+        method: 'POST',
+        path: '/api/v5/xxx/yyy',
+        data: {
+          param: 123
+        }
+    })
+).getOrThrow()
 ```
 
 By default we return an `ApiResult` object to represent the raw response body.
-
-------------
 
 ### Get Data or Throw Error
 
