@@ -1,21 +1,22 @@
 import CryptoJS from 'crypto-js'
 import url from 'url'
-import { httpClient as defaultHttpClient } from './defaultHttpClient.js'
-import { ApiResult } from './ApiResult.js'
+import type { HttpClient } from '../http/defaultHttpClient.js'
+import { httpClient as defaultHttpClient } from '../http/defaultHttpClient.js'
+import { ApiResult } from './../api/apiResult.js'
 
 const DEFAULT_HEADERS = {
     'Content-Type': 'application/json',
 }
 
 class OkxV5Api {
-    #apiBaseUrl: string
-    #profileConfig?: {
+    _apiBaseUrl: string
+    _profileConfig?: {
         apiKey: string
         secretKey: string
         passPhrase: string
     }
-    #httpClient: HttpClient
-    #simulated = false
+    _httpClient: HttpClient
+    _simulated = false
 
     constructor({
         apiBaseUrl,
@@ -29,13 +30,13 @@ class OkxV5Api {
             passPhrase: string
             simulated?: boolean
         }
-        httpClient?: HttpClient
+        httpClient?: HttpClient | undefined
     }) {
-        this.#apiBaseUrl = apiBaseUrl
-        this.#profileConfig = profileConfig
-        this.#httpClient = httpClient ?? defaultHttpClient
+        this._apiBaseUrl = apiBaseUrl
+        this._profileConfig = profileConfig
+        this._httpClient = httpClient ?? defaultHttpClient
         if (typeof profileConfig?.simulated === 'boolean') {
-            this.#simulated = profileConfig.simulated
+            this._simulated = profileConfig.simulated
         }
     }
 
@@ -57,7 +58,7 @@ class OkxV5Api {
     }): Promise<ApiResult> {
         const timestamp = new Date().toISOString()
 
-        const requestUrl = `${this.#apiBaseUrl}${path}`
+        const requestUrl = `${this._apiBaseUrl}${path}`
         const requestPath = url.parse(requestUrl).path
 
         let dataSerialize = data === null || data === undefined ? '' : JSON.stringify(data)
@@ -66,20 +67,20 @@ class OkxV5Api {
         }
 
         const signHeaders = {
-            'OK-ACCESS-KEY': this.#profileConfig?.apiKey ?? '',
+            'OK-ACCESS-KEY': this._profileConfig?.apiKey ?? '',
             'OK-ACCESS-SIGN': CryptoJS.enc.Base64.stringify(
-                CryptoJS.HmacSHA256(timestamp + method + requestPath + dataSerialize, this.#profileConfig?.secretKey ?? ''),
+                CryptoJS.HmacSHA256(timestamp + method + requestPath + dataSerialize, this._profileConfig?.secretKey ?? ''),
             ),
             'OK-ACCESS-TIMESTAMP': timestamp,
-            'OK-ACCESS-PASSPHRASE': this.#profileConfig?.passPhrase ?? '',
+            'OK-ACCESS-PASSPHRASE': this._profileConfig?.passPhrase ?? '',
         }
 
         try {
-            const response = await this.#httpClient({
+            const response = await this._httpClient({
                 url: requestUrl,
                 method,
                 timeout,
-                headers: { ...DEFAULT_HEADERS, ...(this.#simulated ? { 'x-simulated-trading': '1' } : {}), ...signHeaders },
+                headers: { ...DEFAULT_HEADERS, ...(this._simulated ? { 'x-simulated-trading': '1' } : {}), ...signHeaders },
                 params,
                 data,
             })

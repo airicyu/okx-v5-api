@@ -1,4 +1,4 @@
-import { OkxV5Api } from './OkxV5Api.js'
+import { OkxV5Api } from './core/okxV5Api.js'
 
 const run = async () => {
     const okxV5Api = new OkxV5Api({

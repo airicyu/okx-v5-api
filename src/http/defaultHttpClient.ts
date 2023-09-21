@@ -29,6 +29,16 @@ const axiosInstance = axios.create({
     },
 }) as AxiosInstance
 
+declare type HttpClient = (args: {
+    url: string
+    method: string
+    headers?: Record<string, string>
+    params?: any
+    data?: any
+    timeout?: number
+    [propName: string]: any
+}) => Promise<any>
+
 const httpClient: HttpClient = (options: {
     url: string
     method: string
@@ -42,3 +52,4 @@ const httpClient: HttpClient = (options: {
 }
 
 export { httpClient }
+export type { HttpClient }
