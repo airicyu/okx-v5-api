@@ -1,14 +1,12 @@
 {
   "name": "okx-v5-api",
-  "version": "2.4.0",
+  "version": "2.4.1",
   "description": "",
   "type": "module",
   "main": "dist/main.js",
   "module": "dist/main.js",
-  "typings": "dist/types/main.d.ts",
-  "engines": {
-    "node": ">=16.0.0"
-  },
+  "types": "dist/types/lib.d.ts",
+  "typings": "dist/types/lib.d.ts",
   "scripts": {
     "start": "ts-node ./src/main.ts",
     "dev": "ts-node ./src/dev.ts",
